@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="employeeApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Employee Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 60%;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: green;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: darkgreen;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: green;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-top: 2px solid darkgreen;
+        }
+        .result p {
+            font-size: 18px;
+            color: darkgreen;
+        }
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body ng-controller="employeeController">
+
+    <div class="container">
+        <h1>School Employee Management System</h1>
+
+        <label for="name">Employee Name:</label>
+        <input type="text" id="name" ng-model="employeeName" placeholder="Enter Employee Name">
+
+        <label for="position">Position:</label>
+        <input type="text" id="position" ng-model="position" placeholder="Enter Position (e.g., Teacher, Admin)">
+
+        <label for="salary">Basic Salary:</label>
+        <input type="number" id="salary" ng-model="basicSalary" placeholder="Enter Basic Salary">
+
+        <label for="allowances">Allowances:</label>
+        <input type="number" id="allowances" ng-model="allowances" placeholder="Enter Allowances">
+
+        <label for="deductions">Deductions:</label>
+        <input type="number" id="deductions" ng-model="deductions" placeholder="Enter Deductions">
+
+        <button class="btn" ng-click="calculateNetSalary()">Calculate Net Salary</button>
+
+        <div class="result" ng-if="calculated">
+            <h2>Salary Details</h2>
+            <p><strong>Employee Name:</strong> {{ employeeName }}</p>
+            <p><strong>Position:</strong> {{ position }}</p>
+            <p><strong>Net Salary:</strong> Rs. <span class="highlight">{{ netSalary }}</span></p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var app = angular.module('employeeApp', []);
+        app.controller('employeeController', function($scope) {
+            $scope.calculated = false;
+
+            $scope.calculateNetSalary = function() {
+                var basicSalary = parseFloat($scope.basicSalary) || 0;
+                var allowances = parseFloat($scope.allowances) || 0;
+                var deductions = parseFloat($scope.deductions) || 0;
+
+                // Net Salary Calculation
+                $scope.netSalary = basicSalary + allowances - deductions;
+
+                // Mark calculation as done
+                $scope.calculated = true;
+            };
+        });
+    </script>
+
+</body>
+</html>
