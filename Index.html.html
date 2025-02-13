@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="schoolApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Management System</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #28a745;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+a {
+    color: red;
+    cursor: pointer;
+}
+</style>
+</head>
+<body ng-controller="SchoolController">
+
+<div class="container">
+    <h1>School Management System</h1>
+
+    <div class="form-group">
+        <label for="name">Student Name:</label>
+        <input type="text" id="name" ng-model="newStudent.name" placeholder="Enter Student Name">
+    </div>
+
+    <div class="form-group">
+        <label for="rollNumber">Roll Number:</label>
+        <input type="number" id="rollNumber" ng-model="newStudent.rollNumber" placeholder="Enter Roll Number">
+    </div>
+
+    <div class="form-group">
+        <label for="class">Class:</label>
+        <input type="text" id="class" ng-model="newStudent.class" placeholder="Enter Class (e.g., 5A, 10B)">
+    </div>
+
+    <button ng-click="addStudent()">Add Student</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll Number</th>
+                <th>Class</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{student.name}}</td>
+                <td>{{student.rollNumber}}</td>
+                <td>{{student.class}}</td>
+                <td><a ng-click="removeStudent($index)">[delete]</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+var app = angular.module('schoolApp', []);
+app.controller('SchoolController', function($scope) {
+    $scope.students = [
+        { name: "John Doe", rollNumber: "101", class: "5A" },
+        { name: "Jane Smith", rollNumber: "102", class: "6B" }
+    ];
+
+    $scope.newStudent = {};
+
+    $scope.addStudent = function() {
+        if ($scope.newStudent.name && $scope.newStudent.rollNumber && $scope.newStudent.class) {
+            $scope.students.push({
+                name: $scope.newStudent.name,
+                rollNumber: $scope.newStudent.rollNumber,
+                class: $scope.newStudent.class
+            });
+            $scope.newStudent = {};
+        }
+    };
+
+    $scope.removeStudent = function(index) {
+        $scope.students.splice(index, 1);
+    };
+});
+</script>
+
+</body>
+</html>
